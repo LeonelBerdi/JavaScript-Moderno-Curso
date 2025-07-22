@@ -1,25 +1,32 @@
 
 // console.log( console.log('Hola Mundo') );
 
-let a = 10;     // varibles se puede declarar de una en una o
-
-let b = 20,     // multiples separadas por "," 
-    c = 10, 
-    d = 10,    
+let a = 10,     
+    b = 20,     
+    c = 'Hola ', 
+    d = 'Spiderman',    
     x = a + b;
 
-
-console.log( x );
-
+const saludo = c + d;
 
 
-/* EJERCICO DE CLASE
-var b = 10;     //estas son todas las formas de crear variables
-const c = 10;   //estas son todas las formas de crear variables 
-                esta ultima es una constante 
+/*
+    console.table({ a , b, c, d, x}); // me permite persentar los datos en forma de tabla
+*/
+/*    
+console.log('%c Mis variables', 'color:blue; font-weight: bold'); // mensaje con colores y tiopo de letra modificado  )
+console.log('a= ', a );
+console.log('b= ', b );
+console.log('c= ', c );
+// AMBOS HACEN LO MISMO PERO ME AHORRO EL TEXTO 'x= '
+console.log({ a });
+console.log({ b });
+console.log({ c });
+*/
 
-c = 20;       // no se puede modificar el valor de una constante
 
-a = 20;
-b = 30;
+/*
+console.log( x );   //Se ve el resueltas
+console.warn( x );  //Se ve un icono de warning y resueltado
+console.error( x ); //Se ve un icono de error y resueltado
 */
