@@ -1,5 +1,10 @@
 
-console.log( console.log('Hola Mundo') );
+
+// alert('Hola desde app.js');
+
+
+
+// console.log( console.log('Hola Mundo') );
 
 let a = 10,     
     b = 20,     
@@ -9,14 +14,17 @@ let a = 10,
 
 const saludo = c + d;
 
-console.log('%c Mis variables', 'color:blue; font-weight: bold');
-console.log({ a });
-console.log({ b });
-console.log({ c });
+// console.log('%c Mis variables', 'color:blue; font-weight: bold');
+// console.log({ a });
+// console.log({ b });
+// console.log({ c });
 
 c= 'Hola de nuevo';
 
-console.table({ a , b, c, d, x});
+// console.table({ a , b, c, d, x});
+
+var miNombre = 'Leonel';
+
 
 /*
     console.table({ a , b, c, d, x}); // me permite persentar los datos en forma de tabla
@@ -38,3 +46,4 @@ console.log( x );   //Se ve el resueltas
 console.warn( x );  //Se ve un icono de warning y resueltado
 console.error( x ); //Se ve un icono de error y resueltado
 */
+
