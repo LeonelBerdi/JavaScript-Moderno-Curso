@@ -23,8 +23,6 @@ c= 'Hola de nuevo';
 
 // console.table({ a , b, c, d, x});
 
-var miNombre = 'Leonel';
-
 
 /*
     console.table({ a , b, c, d, x}); // me permite persentar los datos en forma de tabla
