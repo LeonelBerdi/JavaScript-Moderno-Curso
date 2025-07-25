@@ -1,4 +1,4 @@
-let personaje = {
+const personaje = {
     nombre: 'Tony Stark', 
     codeName: 'Ironman',                        //string
     vivo: false,                                //booliano
@@ -45,3 +45,44 @@ console.log( 'ultima pelicula', personaje['ultima pelicula']);
 console.log( 'ultima pelicula', personaje['ultima-pelicula']);
 console.log( 'ultima pelicula', personaje["ultima pelicula"]);
 console.log( 'ultima pelicula', personaje["ultima-pelicula"]);
+
+// Más Detalles
+
+delete personaje.edad; //Si uso la palabra reservada "delete" elimino la propiedad "edad"
+console.log( personaje );
+
+// crear una nueva propiedad en el objeto
+
+personaje.casado = 'true'; 
+
+
+// convertir un objeto en un arreglo
+
+const entriesPares = Object.entries( personaje );
+console.log( entriesPares );
+
+/* bloqueo por constante
+personaje = true;
+*/
+
+//bloqueo de propiedades utilizo una instruccion 
+
+Object.freeze( personaje );
+
+
+personaje.dinero = 100000000;
+personaje.casado = false;
+personaje.direccion.ubicacion = 'Costa Rica';
+console.log( personaje );
+
+//bloqueo de propiedades de un objeto dentro de otro utilizo una instruccion y el objeto
+Object.freeze( personaje.direccion );
+
+// como obtener todas las propiedades de dentro de un objeto:
+
+const propiedades = Object.getOwnPropertyNames( personaje );
+console.log({ propiedades });
+
+//como obtener los valoras de las propiedades de un opbjeto 
+const valores = Object.values ( personaje );
+console.log({ valores });
