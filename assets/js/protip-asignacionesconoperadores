@@ -1,0 +1,31 @@
+const regresaTrue = () => {
+    console.log('Regresa true')
+    return true
+};
+
+console.warn('Asignaciones');
+
+const soyUndefined = undefined;
+const soyNull = null;
+const soyFalso = false;
+const soyTrue = true;
+
+// ASIGNACIONES CON AND "&&"
+
+const a1= true && 'Hola Mundo'; // 
+const a2= true && 'Hola' && 'Mundo';// Se le asigna el ultimo valor truthy 
+const a3= true && 'Hola' && ''; //se le asigna el primer valor falsy
+const a4= true && 'Hola' && 'Mundo' && false; //se le asigna el primer valor falsy
+const a5= null && 'Hola' && 'Mundo' && false; //se le asigna el primer valor falsy
+
+console.log({a1, a2, a3, a4, a5});
+
+// ASIGNACIONES CON AND "||"
+
+const o1= false || 'Ya no soy falso';
+const o2= false || soyUndefined|| soyNull || 'Ya no soy falso de nuevo';
+const o3= false || soyUndefined|| soyNull || 'Ya no soy falso de nuevo nuevo'|| true; // el true no se ejecuta porque antes hay un valor truly
+const o4= false || soyUndefined|| regresaTrue() || 'Ya no soy falso de nuevo nuevo'|| true; // el primer valor truly es el de la funcion regresa true es truly asi que el resto del codigo no se ejecuta
+
+
+console.log({o1, o2, o3, o4, /*o5*/});
