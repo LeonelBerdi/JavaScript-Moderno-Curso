@@ -1,0 +1,91 @@
+/**
+* Días de semana abrimos a las 11,
+* pero los fines de semana abrimos a las 9
+*/
+
+// Entra a un sitio web, para consultar si esta abierto hoy...
+/*
+let hoy = new Date();
+dia = hoy.getDate;
+*/
+
+const dia = 5 ; //0: doming ... 1: lunes.....
+const horaActual = 5;
+
+let horaApertura;
+let mensaje; //Esta abierto, Esta cerrado, hoy abrimos a las XX
+
+// SOLUCION DE CLASE
+console.log( '------------ solucion apertura Clase ----------' );
+if ( dia === 0 || dia === 6 ) {
+    console.log('Fin de semana');
+    horaApertura = 9;
+} else {
+    console.log('Día de semana');
+    horaApertura = 11;
+};
+
+if ( horaActual >= horaApertura ) {
+    mensaje = 'Esta abierto';
+} else {
+  mensaje = 'Esta cerrado, hoy abrimos a las ' + horaApertura;    //como concatenar string para evitar errores con el "+"
+    mensaje = `Esta cerrado, hoy abrimos a las ${ horaApertura }`;  //al utilizar back tips se puede utilizar dentro del los ` ${ lo que va dentro puede es una expresion valida de Js, codigo que se ejecuta como si estuviera fuera y luego se convierte a string y se añade }`
+}                                                                   //forma de hacer interpolaciones o concatenaciones de string.
+
+console.log( { horaApertura, mensaje });
+
+// SOLUCION DE LEONEL
+let horaApertura2;
+let mensaje2 = 'Esta abierto'
+
+
+if ( dia > 7 || dia < 0) { 
+    mensaje2 = 'Dia de la semana Invalido'
+};
+
+if ( (dia === 0 || dia === 6) && horaActual < 9  ) {
+    mensaje2 = 'Esta cerrado, hoy abrimos a las 9:00'
+    console.log( mensaje2 );
+};
+ 
+if ( ( dia > 0 && dia <= 5) && horaActual < 11 ) {
+    mensaje2 = 'Esta cerrado, hoy abrimos a las 11:00'
+};
+console.log( '------------ solucion apertura leo ----------' );
+console.log( mensaje2 );
+
+// SOLUCION MEJORADA CODIGO MAS SIMPLE
+console.log( '------------ Solucion Apertura Clase Mejora----------' );
+
+if ( [0,6].includes (dia) ) {           //añado un array y utilizo el metodo de los array includes para comprobar si el valor de dia esta en el array y me devulve un true o flase.
+    console.log('Fin de semana');
+    horaApertura = 9;
+} else {
+    console.log('Día de semana');
+    horaApertura = 11;
+};
+
+if ( horaActual >= horaApertura ) {
+    mensaje = 'Esta abierto';
+} else {
+    mensaje = `Esta cerrado, hoy abrimos a las ${ horaApertura }`;  
+};                                                                   
+
+console.log( { horaApertura, mensaje });
+
+// SOLUCION MEJORADA AÑADO TERNARIOS
+console.log( '------------ Solucion Apertura TERNARIOS ----------' );
+
+horaApertura = ( [0,6].includes(dia)) ? 9 : 11; //LA CONDICION TERNARIA SE REALIZA CON UN ? QUE ES COMO SI FUERA UN IF AL INICIO Y LUEGO LAS LLAVES ME QUITO TODO ESTO Y EL ELSE SE REEMPLAZA CON ":"
+/*
+if ( horaActual >= horaApertura ) {
+    mensaje = 'Esta abierto';
+} else {
+    mensaje = `Esta cerrado, hoy abrimos a las ${ horaApertura }`;  
+}                                                                   
+*/
+mensaje = ( horaActual >= horaApertura) ? 'Esta abierto' : `Esta cerrado, hoy abrimos a las ${ horaApertura }`;
+
+
+console.log( { horaActual, horaApertura, mensaje });
+
