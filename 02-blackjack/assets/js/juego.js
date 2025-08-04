@@ -64,6 +64,33 @@ for ( let i = 0; i < totalCartas +1 ; i ++) {
 };
 */
 
+const valorCartaE = ( carta ) => {                      //EXPLICACION DE COMO PEDIR CARTAS
+
+//  const valor = carta[0];                             //saco la primera posicion de un string pero el numero 10 tiene 2 valores como lo resuelvo??
+    const valor = carta.substring(0, carta.length-1);   //el metodo substring me permite extrar las posiciones que quiero del string le indic la inicial y la final como no quiero la letra le resto uno al valor del lenght, este metodo me devuelve un valor de tipo "string" no de tipo "number"
+    let puntos = 0;                                     //incializon una variable para guardar el valor en puntos de la carta que he sacado de la baraja
+    if ( isNaN ( valor ) ) {                            //"isNAN" "is not a numbre evalua el valor recibido y retorna true si no es un numero
+        console.log('No es un numero');
+        puntos = ( valor === 'A' ) ? 11 : 10;
+    } else {
+        console.log('Es un numero');
+        puntos = valor * 1;                             //Tengo que convertir el valor de la variable de string a un valor de tipo number, una de las formas es multiplicar el valor * 1;
+    };
+    console.log ({ valor });                            // ejemplo valorCarta('10D'); entonces valor = 10
+    console.log ( puntos );
+};
+
+// valorCartaE('AD');                                   //PRUEBA DE LA FUNCION VALOR CARTAS EXPLICADA
 
 
+const valorCarta = ( carta ) => {                       //FUNCION DE VALOR CARTAS RESUMIDA UTILIZO 2 TERNARIAS
+    const valor = carta.substring(0, carta.length-1);
+    return ( isNaN( valor )) ?                          //1 TERNARIA COMPRUEBO SI VALOR NO ES UN NUMERO
+            ( valor === 'A') ? 11 : 10                  //EN CASO AFIRMATIVO HAGO UNA SEGUNDA TERNARIA PARA VER SI ES UNA "A" DEVUELVO 11 SINO DEVUELVO 10.
+            : valor * 1;                                //EN CASO QUE LA PRIMERA TERNARIA SEA FALSE MULTIPLICO EL VALOR * 1 PARA CONVERTIRLO DE STRING A NUMBER.
+};
 
+// console.log (valorCarta('9D'));                      //PRUEBA DE LA FUNCION VALOR CARTAS RESUMIDA EXPLICADA
+
+const valor = valorCarta( pedirCarta() );
+console.log ({ valor });
