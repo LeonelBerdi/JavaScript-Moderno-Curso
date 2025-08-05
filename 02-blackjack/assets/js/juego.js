@@ -9,7 +9,7 @@ let deck         = [];
 const tipos      = ['C','D','H','S']; // Club - Diamond - Hearts - Spades 
 const especiales = ['A','J','Q','K']; // AS - JOKER - QUEEN - KING 
 let puntosJugador = 0,
-    puntosComputador = 0;
+    puntosComputadora = 0;
 
 
 // Referencias del HTML
@@ -18,6 +18,7 @@ const btnPedir   = document.querySelector('#btnPedir');
 const btnDetener = document.querySelector('#btnDetener');
 const puntosHtml = document.querySelectorAll('small');
 const divCartasJugador = document.querySelector('#jugador-cartas');
+const divCartasComputadora = document.querySelector('#computadora-cartas');
 
 // Esta funcion crea una nueva baraja.
 const crearDeck= () => {
@@ -106,6 +107,36 @@ const valorCarta = ( carta ) => {                       //FUNCION DE VALOR CARTA
 const valor = valorCarta( pedirCarta() );
 console.log ({ valor });
 */
+// Turno de la Computadora
+const turnoComputadora = ( puntosMinimos ) => {
+
+   do {
+        const carta = pedirCarta();
+        console.log('carta computadora:',carta);
+        puntosComputadora = puntosComputadora + valorCarta ( carta );
+        console.log('puntos computadora:',puntosComputadora);
+        puntosHtml[1].innerText = puntosComputadora;
+
+        // <img class="carta" src="assets/cartas/3C.png">   texto que se debe añadir para que se muestre la carta por pantalla
+        const imgCarta = document.createElement('img');
+        imgCarta.src = `assets/cartas/${ carta }.png`;
+        imgCarta.classList.add('carta');
+        divCartasComputadora.append( imgCarta );
+
+        if( puntosMinimos > 21 ) {
+            break;
+        };
+
+
+   } while( ( puntosComputadora < puntosMinimos ) && ( puntosMinimos <= 21 ) );
+
+
+
+};
+
+
+
+
 
 // Eventos
 /*
@@ -132,10 +163,24 @@ btnPedir.addEventListener('click', () => {              //Puede ser una funcion 
     if ( puntosJugador > 21 ) {
         console.warn('Lo siento mucho, perdiste');
         btnPedir.disabled = true;
+        btnDetener.disabled = true;
+        turnoComputadora( puntosJugador );
     } else if ( puntosJugador === 21 ) {
         console.warn('21, genial!');
         btnPedir.disabled = true;
-    }
+        btnDetener.disabled = true;
+        turnoComputadora( puntosJugador );
+    };
+
+
+});
+
+
+btnDetener.addEventListener('click', () => {
+    btnPedir.disabled = true;
+    btnDetener.disabled = true;
+    turnoComputadora( puntosJugador );
+
 
 
 });
