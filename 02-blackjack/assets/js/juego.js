@@ -8,6 +8,15 @@
 let deck         = [];
 const tipos      = ['C','D','H','S']; // Club - Diamond - Hearts - Spades 
 const especiales = ['A','J','Q','K']; // AS - JOKER - QUEEN - KING 
+let puntosJugador = 0,
+    puntosComputador = 0;
+
+
+// Referencias del HTML
+const btnNuevo   = document.querySelector('#btnNuevo');
+const btnPedir   = document.querySelector('#btnPedir');
+const btnDetener = document.querySelector('#btnDetener');
+const puntosHtml = document.querySelectorAll('small');
 
 // Esta funcion crea una nueva baraja.
 const crearDeck= () => {
@@ -47,9 +56,10 @@ const pedirCarta = () => {
     };
 
     const carta = deck.pop();
-    
+    /* QUITO ESTOS AVISOS 
     console.log( deck );
     console.log({ carta });
+    */
     return carta;
 };
 
@@ -91,6 +101,24 @@ const valorCarta = ( carta ) => {                       //FUNCION DE VALOR CARTA
 };
 
 // console.log (valorCarta('9D'));                      //PRUEBA DE LA FUNCION VALOR CARTAS RESUMIDA EXPLICADA
-
+/* QUITO AVISOS
 const valor = valorCarta( pedirCarta() );
 console.log ({ valor });
+*/
+
+// Eventos
+/*
+btnPedir.addEventListener('click', function() {         //Esto hace que se compruebe un evento que es el click en el boton indicado
+                                                          Basicamente le estoy diciendo que cuando se haga click en el boton indicando se va a disparar la accion indicada entre las llaves
+    console.log('click');                               //Coloca el concole log para comprobar que cada vez que se presiona el boton se ejecuta la funcion y aparece el click
+});
+*/
+                                                        //La funcion "function() {}" que esta colocada como un argumento en la funcion se conoce como callback
+btnPedir.addEventListener('click', () => {              //Puede ser una funcion tradicional o una funcion de flecha la envio como argumento del metodo ".addEventListener('click', () => {})"
+
+    const carta = pedirCarta();
+    console.log(carta);
+    puntosJugador = puntosJugador + valorCarta ( carta );
+    console.log(puntosJugador);
+    puntosHtml[0].innerText = puntosJugador;
+});
