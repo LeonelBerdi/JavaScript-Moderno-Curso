@@ -130,12 +130,19 @@ const turnoComputadora = ( puntosMinimos ) => {
 
    } while( ( puntosComputadora < puntosMinimos ) && ( puntosMinimos <= 21 ) );
 
+   setTimeout(() => {                           //funcion de Java para decirle que antes de ejecutas este codigo espere "XX" milesimas de segundo
 
-
+       if( puntosComputadora === puntosMinimos ) {
+            alert('Nadie gana :(');
+        } else if ( puntosMinimos > 21 ) {
+            alert('Computadora gana');
+        } else if (puntosComputadora > 21 ) {
+            alert('Jugador Gana');
+        } else {
+            alert('Computadora gana');
+        };
+   }, 50 );
 };
-
-
-
 
 
 // Eventos
@@ -181,6 +188,25 @@ btnDetener.addEventListener('click', () => {
     btnDetener.disabled = true;
     turnoComputadora( puntosJugador );
 
+});
 
 
+btnNuevo.addEventListener('click', () => {
+    
+    console.clear();
+    deck = [];
+    deck = crearDeck();
+
+    puntosJugador = 0;
+    puntosComputadora = 0;
+
+    puntosHtml[0].innerText = 0;
+    puntosHtml[1].innerText = 0;
+
+    divCartasComputadora.innerHTML = '';
+    divCartasJugador.innerHTML = '';
+        
+    btnPedir.disabled = false;
+    btnDetener.disabled = false;
+    
 });
