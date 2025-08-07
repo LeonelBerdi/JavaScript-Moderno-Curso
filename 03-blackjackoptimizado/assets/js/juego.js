@@ -1,61 +1,57 @@
-//DECLARO LA SINTAXIS DEL PATRON MODULO
-// SE PUEDE INCIAR CON UNA FUNCION TRADICIONAL O FUNCION DE FLECHA
-// EN ESTE CASO UTILIZO UNA FUNCION ANONIMA  ()=>{}
-// SI NECESITO LLAMAR ESTA FUNCION INMEDIATAMENTE DESPUES DE SER CREADA, VOY A PONER LA FUNCION ENTRE PARENTESIS Y AL FINAL PONGO OTROS PARENTESIS EJEMPLO (()=>{})()
-// EL MISMO CASO CON UNA FUNCION NORMAL SERIA : (function() {})()
-// A esto se le denomina funcion anonima autoinvocada.
-/*
-(() => {
+const miModulo = (() => {
     'use strict'
 
-    const personajes = ['Ana', 'Mercy', 'Mei'];
-    console.log(personajes);
-
-})();
-
-esto se conoce como el patron modulo!!!!
-*/
-
-
-
-(() => {
 
     let deck         = [];
-    const tipos      = ['C','D','H','S']; // Club - Diamond - Hearts - Spades 
-    const especiales = ['A','J','Q','K']; // AS - JOKER - QUEEN - KING 
-    let puntosJugador = 0,
-        puntosComputadora = 0;
-
+    const tipos      = ['C','D','H','S'], 
+          especiales = ['A','J','Q','K']; 
+    
+    let puntosJugadores = [];
 
     // Referencias del HTML
-    const btnNuevo   = document.querySelector('#btnNuevo');
-    const btnPedir   = document.querySelector('#btnPedir');
-    const btnDetener = document.querySelector('#btnDetener');
-    const puntosHtml = document.querySelectorAll('small');
-    const divCartasJugador = document.querySelector('#jugador-cartas');
-    const divCartasComputadora = document.querySelector('#computadora-cartas');
+    const btnNuevo   = document.querySelector('#btnNuevo'),
+          btnPedir   = document.querySelector('#btnPedir'),
+          btnDetener = document.querySelector('#btnDetener');
+    
+    const divCartasJugadores = document.querySelectorAll('.divCartas'),
+          puntosHtml = document.querySelectorAll('small');
+          
+
+
+    // Esta funcion inicializa el juego
+    const inicializarJuego = ( numjugadores = 2 ) => {
+        deck = crearDeck();
+
+        puntosJugadores = [];
+        for( let i = 0; i< numjugadores; i++ ) {
+            puntosJugadores.push(0);
+        };
+
+        puntosHtml.forEach( elem => elem.innerText = 0 );
+        divCartasJugadores.forEach( elem => elem.innerHTML = '' );
+            
+        btnPedir.disabled = false;
+        btnDetener.disabled = false;
+  
+    };
 
     // Esta funcion crea una nueva baraja.
     const crearDeck= () => {
 
+        deck = [];    
         for ( let i = 2; i <=10 ; i++ ) {
             for( let tipo of tipos ) {
                 deck.push(i + tipo);
             }
         };
-        // SOLUCION DE CLASE
+        
         for( let tipo of tipos ) {
             for ( let esp of especiales ) {
                 deck.push(esp + tipo);
             } 
-        };
-
-        deck = _.shuffle( deck );
-        return deck;
+        }
+        return _.shuffle( deck );
     };
-
-    crearDeck();
-
 
     // Esta funcion me permite tomar una carta
     const pedirCarta = () => {
@@ -63,45 +59,9 @@ esto se conoce como el patron modulo!!!!
         if ( deck.length === 0 ) {
             throw 'No hay cartas en el deck';
         };
-
-        const carta = deck.pop();
-        /* QUITO ESTOS AVISOS 
-        console.log( deck );
-        console.log({ carta });
-        */
-        return carta;
+        return deck.pop();
     };
-
-
-    /*
-    deck = [];                                      Para comrpobar que el trow funciona inicializo el mazo sin cartas
-    pedirCarta();
-
-    const totalCartas = deck.length;                Otra opcion para comprobar el trow es vaciar el mazo con un for de cartas
-    for ( let i = 0; i < totalCartas +1 ; i ++) {
-        pedirCarta();
-    };
-    */
-
-    const valorCartaE = ( carta ) => {                      //EXPLICACION DE COMO PEDIR CARTAS
-
-    //  const valor = carta[0];                             //saco la primera posicion de un string pero el numero 10 tiene 2 valores como lo resuelvo??
-        const valor = carta.substring(0, carta.length-1);   //el metodo substring me permite extrar las posiciones que quiero del string le indic la inicial y la final como no quiero la letra le resto uno al valor del lenght, este metodo me devuelve un valor de tipo "string" no de tipo "number"
-        let puntos = 0;                                     //incializon una variable para guardar el valor en puntos de la carta que he sacado de la baraja
-        if ( isNaN ( valor ) ) {                            //"isNAN" "is not a numbre evalua el valor recibido y retorna true si no es un numero
-            console.log('No es un numero');
-            puntos = ( valor === 'A' ) ? 11 : 10;
-        } else {
-            console.log('Es un numero');
-            puntos = valor * 1;                             //Tengo que convertir el valor de la variable de string a un valor de tipo number, una de las formas es multiplicar el valor * 1;
-        };
-        console.log ({ valor });                            // ejemplo valorCarta('10D'); entonces valor = 10
-        console.log ( puntos );
-    };
-
-    // valorCartaE('AD');                                   //PRUEBA DE LA FUNCION VALOR CARTAS EXPLICADA
-
-
+   
     const valorCarta = ( carta ) => {                       //FUNCION DE VALOR CARTAS RESUMIDA UTILIZO 2 TERNARIAS
         const valor = carta.substring(0, carta.length-1);
         return ( isNaN( valor )) ?                          //1 TERNARIA COMPRUEBO SI VALOR NO ES UN NUMERO
@@ -109,46 +69,55 @@ esto se conoce como el patron modulo!!!!
                 : valor * 1;                                //EN CASO QUE LA PRIMERA TERNARIA SEA FALSE MULTIPLICO EL VALOR * 1 PARA CONVERTIRLO DE STRING A NUMBER.
     };
 
-    // console.log (valorCarta('9D'));                      //PRUEBA DE LA FUNCION VALOR CARTAS RESUMIDA EXPLICADA
-    /* QUITO AVISOS
-    const valor = valorCarta( pedirCarta() );
-    console.log ({ valor });
-    */
+    // Turno: 0 = primer jugador y el ultimo sera la computadora
+    const acumularPuntos = ( carta, turno ) => {
+        puntosJugadores[turno] = puntosJugadores[turno] + valorCarta ( carta );
+        puntosHtml[turno].innerText = puntosJugadores[turno];
+        return puntosJugadores[turno];
+    };
+
+    const crearCarta = ( carta, turno ) => {
+
+        const imgCarta = document.createElement('img');
+        imgCarta.src = `assets/cartas/${ carta }.png`;
+        imgCarta.classList.add('carta');
+        divCartasJugadores[turno].append( imgCarta );
+
+    };
+
+    const determinarGanador = () => {
+
+        const [ puntosMinimos, puntosComputadora ] = puntosJugadores;
+
+                setTimeout(() => {                           //funcion de Java para decirle que antes de ejecutas este codigo espere "XX" milesimas de segundo
+
+            if( puntosComputadora === puntosMinimos ) {
+                    alert('Nadie gana :(');
+                } else if ( puntosMinimos > 21 ) {
+                    alert('Computadora gana');
+                } else if (puntosComputadora > 21 ) {
+                    alert('Jugador Gana');
+                } else {
+                    alert('Computadora gana');
+                };
+        }, 100 );
+
+    }
+
     // Turno de la Computadora
     const turnoComputadora = ( puntosMinimos ) => {
 
-    do {
+        let puntosComputadora = 0;
+
+        do {
             const carta = pedirCarta();
-            console.log('carta computadora:',carta);
-            puntosComputadora = puntosComputadora + valorCarta ( carta );
-            console.log('puntos computadora:',puntosComputadora);
-            puntosHtml[1].innerText = puntosComputadora;
+            puntosComputadora = acumularPuntos( carta, puntosJugadores.length - 1 );
+            crearCarta( carta, puntosJugadores.length -1 );
+            
 
-            // <img class="carta" src="assets/cartas/3C.png">   texto que se debe añadir para que se muestre la carta por pantalla
-            const imgCarta = document.createElement('img');
-            imgCarta.src = `assets/cartas/${ carta }.png`;
-            imgCarta.classList.add('carta');
-            divCartasComputadora.append( imgCarta );
+        } while( ( puntosComputadora < puntosMinimos ) && ( puntosMinimos <= 21 ) );
 
-            if( puntosMinimos > 21 ) {
-                break;
-            };
-
-
-    } while( ( puntosComputadora < puntosMinimos ) && ( puntosMinimos <= 21 ) );
-
-    setTimeout(() => {                           //funcion de Java para decirle que antes de ejecutas este codigo espere "XX" milesimas de segundo
-
-        if( puntosComputadora === puntosMinimos ) {
-                alert('Nadie gana :(');
-            } else if ( puntosMinimos > 21 ) {
-                alert('Computadora gana');
-            } else if (puntosComputadora > 21 ) {
-                alert('Jugador Gana');
-            } else {
-                alert('Computadora gana');
-            };
-    }, 50 );
+        determinarGanador();
     };
 
 
@@ -163,17 +132,10 @@ esto se conoce como el patron modulo!!!!
     btnPedir.addEventListener('click', () => {              //Puede ser una funcion tradicional o una funcion de flecha la envio como argumento del metodo ".addEventListener('click', () => {})"
 
         const carta = pedirCarta();
-        console.log(carta);
-        puntosJugador = puntosJugador + valorCarta ( carta );
-        console.log(puntosJugador);
-        puntosHtml[0].innerText = puntosJugador;
-
-        // <img class="carta" src="assets/cartas/2C.png">   texto que se debe añadir para que se muestre la carta por pantalla
-        const imgCarta = document.createElement('img');
-        imgCarta.src = `assets/cartas/${ carta }.png`;
-        imgCarta.classList.add('carta');
-        divCartasJugador.append( imgCarta );
-
+        const puntosJugador = acumularPuntos(carta, 0);
+        
+        crearCarta( carta, 0 );
+        
         if ( puntosJugador > 21 ) {
             console.warn('Lo siento mucho, perdiste');
             btnPedir.disabled = true;
@@ -192,28 +154,18 @@ esto se conoce como el patron modulo!!!!
     btnDetener.addEventListener('click', () => {
         btnPedir.disabled = true;
         btnDetener.disabled = true;
-        turnoComputadora( puntosJugador );
+        turnoComputadora( puntosJugadores[0] );
     });
 
 
-    btnNuevo.addEventListener('click', () => {
+    // btnNuevo.addEventListener('click', () => {
         
-        console.clear();
-        deck = [];
-        deck = crearDeck();
-
-        puntosJugador = 0;
-        puntosComputadora = 0;
-
-        puntosHtml[0].innerText = 0;
-        puntosHtml[1].innerText = 0;
-
-        divCartasComputadora.innerHTML = '';
-        divCartasJugador.innerHTML = '';
-            
-        btnPedir.disabled = false;
-        btnDetener.disabled = false;
+    //     inicializarJuego();
         
-    });
+    // });
+
+    return {
+        nuevoJuego: inicializarJuego
+    };
 
 })();
