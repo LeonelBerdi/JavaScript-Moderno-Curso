@@ -7,7 +7,7 @@ import { pedirCarta } from './usecases/pedir-carta.js';
 import { valorCarta } from './usecases/valor-carta.js';
 */
 //Importacion desde el archivo de barril generado en el directorio "usecases"
-import { crearDeck, pedirCarta, valorCarta } from './usecases/index.js';
+import { crearDeck, pedirCarta, valorCarta, turnoComputadora } from './usecases/index.js';
 
 /**
  * 2C = Two of Clubs
@@ -58,6 +58,7 @@ const valorCarta = ( carta ) => {
             : valor * 1;
 }
 */
+/*
 // turno de la computadora
 const turnoComputadora = ( puntosMinimos ) => {
 
@@ -91,7 +92,7 @@ const turnoComputadora = ( puntosMinimos ) => {
         }
     }, 100 );
 }
-
+*/
 
 
 // Eventos
@@ -112,13 +113,13 @@ btnPedir.addEventListener('click', () => {
         console.warn('Lo siento mucho, perdiste');
         btnPedir.disabled   = true;
         btnDetener.disabled = true;
-        turnoComputadora( puntosJugador );
+        turnoComputadora( puntosJugador, puntosHTML[1], divCartasComputadora, deck );
 
     } else if ( puntosJugador === 21 ) {
         console.warn('21, genial!');
         btnPedir.disabled   = true;
         btnDetener.disabled = true;
-        turnoComputadora( puntosJugador );
+        turnoComputadora( puntosJugador, puntosHTML[1], divCartasComputadora, deck );
     }
 
 });
@@ -128,7 +129,7 @@ btnDetener.addEventListener('click', () => {
     btnPedir.disabled   = true;
     btnDetener.disabled = true;
 
-    turnoComputadora( puntosJugador );
+    turnoComputadora( puntosJugador, puntosHTML[1], divCartasComputadora, deck );
 });
 
 btnNuevo.addEventListener('click', () => {
