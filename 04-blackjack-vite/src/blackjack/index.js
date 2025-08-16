@@ -1,9 +1,13 @@
 import _ from 'underscore';    //esto es para importar el modulo entero de underscore y renombrarlo como "_"
 // import { crearDeck as crearNuevoDeck } from './usecases/crear-deck.js'; //la palabra reservada "as" me permite renombrar una funcion dentro de este archivo despues de la importacion
-import { crearDeck } from './usecases/crear-deck.js';
 // import cualquierNombreParaCrearUnNuevoDeck from './usecases/crear-deck.js' //uso la importacion de la exportacion por defecto.
+/* Los reemplazo por una unica importacion desde un archivo barril
+import { crearDeck } from './usecases/crear-deck.js';
 import { pedirCarta } from './usecases/pedir-carta.js';
 import { valorCarta } from './usecases/valor-carta.js';
+*/
+//Importacion desde el archivo de barril generado en el directorio "usecases"
+import { crearDeck, pedirCarta, valorCarta } from './usecases/index.js';
 
 /**
  * 2C = Two of Clubs
