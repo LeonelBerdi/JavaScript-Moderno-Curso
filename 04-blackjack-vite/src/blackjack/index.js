@@ -7,7 +7,7 @@ import { pedirCarta } from './usecases/pedir-carta.js';
 import { valorCarta } from './usecases/valor-carta.js';
 */
 //Importacion desde el archivo de barril generado en el directorio "usecases"
-import { crearDeck, pedirCarta, valorCarta, turnoComputadora } from './usecases/index.js';
+import { crearDeck, pedirCarta, valorCarta, turnoComputadora, crearCartaHTML } from './usecases/index.js';
 
 /**
  * 2C = Two of Clubs
@@ -31,8 +31,6 @@ const divCartasJugador     = document.querySelector('#jugador-cartas');
 const divCartasComputadora = document.querySelector('#computadora-cartas');
 
 const puntosHTML = document.querySelectorAll('small');
-
-
 
 deck = crearDeck(tipos, especiales );
 
@@ -103,10 +101,15 @@ btnPedir.addEventListener('click', () => {
     puntosJugador = puntosJugador + valorCarta( carta );
     puntosHTML[0].innerText = puntosJugador;
     
+    /*REFACTORIZADO
     // <img class="carta" src="assets/cartas/2C.png">
     const imgCarta = document.createElement('img');
     imgCarta.src = `assets/cartas/${ carta }.png`; //3H, JD
     imgCarta.classList.add('carta');
+    */
+    const imgCarta = crearCartaHTML(carta);
+    
+    
     divCartasJugador.append( imgCarta );
 
     if ( puntosJugador > 21 ) {
