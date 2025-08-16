@@ -2,6 +2,8 @@ import _ from 'underscore';    //esto es para importar el modulo entero de under
 // import { crearDeck as crearNuevoDeck } from './usecases/crear-deck.js'; //la palabra reservada "as" me permite renombrar una funcion dentro de este archivo despues de la importacion
 import { crearDeck } from './usecases/crear-deck.js';
 // import cualquierNombreParaCrearUnNuevoDeck from './usecases/crear-deck.js' //uso la importacion de la exportacion por defecto.
+import { pedirCarta } from './usecases/pedir-carta.js';
+import { valorCarta } from './usecases/valor-carta.js';
 
 /**
  * 2C = Two of Clubs
@@ -31,7 +33,7 @@ const puntosHTML = document.querySelectorAll('small');
 deck = crearDeck(tipos, especiales );
 
 
-
+/* pedir-carta.js
 // Esta función me permite tomar una carta
 const pedirCarta = () => {
 
@@ -41,8 +43,9 @@ const pedirCarta = () => {
     const carta = deck.pop();
     return carta;
 }
-
-// pedirCarta();
+*/
+/*
+// Esta funcion Calcula el Valor que tiene la carta que recibe();
 const valorCarta = ( carta ) => {
 
     const valor = carta.substring(0, carta.length - 1);
@@ -50,12 +53,12 @@ const valorCarta = ( carta ) => {
             ( valor === 'A' ) ? 11 : 10
             : valor * 1;
 }
-
+*/
 // turno de la computadora
 const turnoComputadora = ( puntosMinimos ) => {
 
     do {
-        const carta = pedirCarta();
+        const carta = pedirCarta( deck );
 
         puntosComputadora = puntosComputadora + valorCarta( carta );
         puntosHTML[1].innerText = puntosComputadora;
@@ -90,7 +93,7 @@ const turnoComputadora = ( puntosMinimos ) => {
 // Eventos
 btnPedir.addEventListener('click', () => {
 
-    const carta = pedirCarta();
+    const carta = pedirCarta( deck );
     
     puntosJugador = puntosJugador + valorCarta( carta );
     puntosHTML[0].innerText = puntosJugador;
