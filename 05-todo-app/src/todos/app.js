@@ -4,6 +4,7 @@ import { renderTodos } from './use-cases';
 
 const elementIDs = {
     TodoList: '.todo-list',
+    NewTodoInput: '#new-todo-input',
 
 
 }
@@ -32,7 +33,25 @@ export const App = ( elementId ) => {
         displayTodos();
     })();
 
+    // referencias HTML
+    const newDescriptionInput = document.querySelector( elementIDs.NewTodoInput );
 
+
+
+    //Listeners
+    newDescriptionInput.addEventListener('keyup', ( event ) => {
+        /* Compruebo la informacion del evento que recibo 
+        console.log(event);
+        console.log(event.target.value);
+        */
+       if ( event.keyCode !== 13 ) return; //esto significa que cualquier tecla presionada va a sacarme de la funcion no va a continuar la ejecucion
+       
+       if ( event.target.value.trim().lenght === 0 ) return;
+
+       todoStore.addTodo( event.target.value );
+       displayTodos();
+       event.target.value = '';
+    });
 
 
 
