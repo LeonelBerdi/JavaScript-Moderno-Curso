@@ -1,0 +1,10 @@
+
+
+
+VITE_API_KEY= Ejemplo:EstaEsMiLlavePrivada
+
+# BASE_URL: Es el URL donde se realizaran las peticiones. Ejemplo: Http://localhost:12312/cursos/leonel (URL inventada)
+# Cuando se haga el despliegue de la aplicacion en produccion vamos a querer modificar el "localhost:"  vamos a querer modificar esta variable de entorno y cambiar el "localhost:"
+
+VITE_BASE_URL= Ejemplo: Http://localhost:12312/cursos/leonel
+
