@@ -8,16 +8,28 @@ export const callbacksComponent = ( element ) => {
 
     /* compruebo que estoy en la funcion
     console.log('callbacksComponent');*/
-    const id = '5d86371fd55e2e2a30fe1ccb1';
-    findHero( id, ( error, hero )=>{
+    const id1 = '5d86371fd55e2e2a30fe1ccb1';
+    const id2 = '5d86371fd55e2e2a30fe1ccb2';
+    findHero( id1, ( error, hero1 )=>{
         //element.innerHTML = hero?.name || 'No hay heroe'; primera opcion de solucion de validacion 
         
         if ( error ) {
             element.innerHTML = error;
             return;
         }
+
+        findHero( id2, (error, hero2) => {
+            if ( error ) {
+            element.innerHTML = error;
+            return;
+
+            }
         
-        element.innerHTML = hero.name;
+            element.innerHTML = `${ hero1.name } / ${ hero2.name }`;
+          
+        })
+        
+        
     } );
 
 
