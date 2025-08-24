@@ -1,6 +1,8 @@
 import './style.css';
 import javascriptLogo from './javascript.svg';
-import { environmentsComponent } from './src/concepts/environments';
+import { demoComponent } from './src/concepts/demo.js';
+import { callbacksComponent } from './src/concepts/02-callbacks.js';
+
 
 document.querySelector('#app').innerHTML = `
   <div>
@@ -22,4 +24,6 @@ document.querySelector('#app').innerHTML = `
 const element = document.querySelector('.card');
 
 
-environmentsComponent( element );
+//environmentsComponent( element ); VIENE DE EJERCICIO ANTERIOR NO FUNCIONA 
+//demoComponent(element);           COMPROBACION INICIAL
+callbacksComponent( element );
