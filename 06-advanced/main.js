@@ -2,6 +2,7 @@ import './style.css';
 import javascriptLogo from './javascript.svg';
 import { demoComponent } from './src/concepts/demo.js';
 import { callbacksComponent } from './src/concepts/02-callbacks.js';
+import { promiseComponent } from './src/concepts/03-promises.js';
 
 
 document.querySelector('#app').innerHTML = `
@@ -26,4 +27,5 @@ const element = document.querySelector('.card');
 
 //environmentsComponent( element ); VIENE DE EJERCICIO ANTERIOR NO FUNCIONA 
 //demoComponent(element);           COMPROBACION INICIAL
-callbacksComponent( element );
+//callbacksComponent( element );
+promiseComponent( element );
