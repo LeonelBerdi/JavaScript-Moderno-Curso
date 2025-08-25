@@ -5,10 +5,37 @@ import { heroes } from '../data/heroes.js';
  * @param {HTMLDivElement} element Aqui voy a recibir el elemento Html es el espacio en el que voy a querer renderizar lo que sea
  */
 export const promiseComponent = ( element ) => {
+    //Esta funcion es para presentar la promesa cuando es correcta
+    const renderHero = ( hero ) => {
+        element.innerHTML = hero.name;
+    }
+    //Esta funcion es para manejar el error
+    const renderError = ( error ) => {
+        element.innerHTML = `
+        <h1>Error:</h1>
+        ${error}
+        `;
+    } 
+    const id1 ='5d86371f25a058e5b1c8a65e';
+    const id2 ='5d86371f233c9f2425f16916';
 
-    console.log('promiseComponent');
-
-    
+    findHero( id1 )
+        .then( renderHero )
+        .catch( renderError );
+        /* PROMESAS COMO CONSUMIRLAS OBTENER SU VALOR
+        .then = me da el valor de la promesa si se ha resuleto "resolve"
+        .catch = me da el valor de la promesa si hay un error "reject"
+        .finally = es una funcion que se va a ejecutar siempre despues del then o el catch y se utiliza para realizar algun tipo de limpieza en el codigo.
+        NOTAS Y OPTIMIZACION DE CODIGO
+        Esta funcion es para llamar al valor de la promesa si es resolve. 
+        .then ( superHero => renderHero( superHero )); 
+        Optimizo esta Linea:
+        .then( renderHero ); Como mi funcion solo recibe un unico argumento entonces llamo a la funcion y le doy como argumento el valor de mi promesa como argumento.
+        Esta es la fomra de llamar el valor de la promesa si el resultado es reject
+        .catch( error => renderError ( error ) ); 
+        Optimizo:
+        .catch( renderError );
+        */
 }
 
 /**
