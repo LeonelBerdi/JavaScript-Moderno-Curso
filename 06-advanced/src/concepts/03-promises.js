@@ -62,6 +62,7 @@ export const promiseComponent = ( element ) => {
         } )
         .catch( renderError );
     */
+    /* Como evitar el anidamiento
     findHero( id1 )
         .then( ( hero1 ) => {
             
@@ -72,6 +73,26 @@ export const promiseComponent = ( element ) => {
                 .catch( renderError );
         } )
         .catch( renderError );
+    */
+    /* SOLUCION CON RETURN PARA ANIDAMIENTO
+    let hero1;
+
+    findHero(id1)
+        .then( hero => {
+            hero1 = hero;
+            return findHero(id2);
+        }).then( hero2 => {
+            renderTwoHeros( hero1, hero2);
+        })
+        .catch( renderError );
+    */
+    Promise.all([
+        findHero(id1),
+        findHero(id2),
+    ])
+    .then( ([hero1, hero2]) => renderTwoHeros( hero1, hero2 ))
+    .catch( renderError );
+    
 }
 
 /**
