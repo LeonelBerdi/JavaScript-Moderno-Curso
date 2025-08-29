@@ -3,7 +3,7 @@ import javascriptLogo from './javascript.svg';
 import { demoComponent } from './src/concepts/demo.js';
 import { callbacksComponent } from './src/concepts/02-callbacks.js';
 import { promiseComponent } from './src/concepts/03-promises.js';
-
+import { promiseRaceComponent } from './src/concepts/04-promise-race.js';
 
 document.querySelector('#app').innerHTML = `
   <div>
@@ -28,4 +28,5 @@ const element = document.querySelector('.card');
 //environmentsComponent( element ); VIENE DE EJERCICIO ANTERIOR NO FUNCIONA 
 //demoComponent(element);           COMPROBACION INICIAL
 //callbacksComponent( element );
-promiseComponent( element );
+//promiseComponent( element );
+promiseRaceComponent( element );
