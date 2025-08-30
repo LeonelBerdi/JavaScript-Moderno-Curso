@@ -19,11 +19,11 @@ export const asyncComponent = ( element ) => {
     */
 
     findHero(id1)
-        .then( name => element.innerHTML = name );
+        .then( name => element.innerHTML = name )
+        .catch( error => element.innerHTML = error );
 
-
-    console.log(findHero( id1 ));
-    console.log(findHeroPromise( id1 ));
+    // console.log(findHero( id1 ));
+    // console.log(findHeroPromise( id1 ));
     
 }
 
@@ -33,10 +33,14 @@ export const asyncComponent = ( element ) => {
  * @returns {Promise<String>} mi funcion devulve una promesa cuyo valor es un String 
  */
 const findHero = async( id ) => {
+    
 
     const hero = heroes.find( hero => hero.id === id );
+    if (!hero ) 
+        throw `Hero with id ${ id } not found`;
+        
 
-    return hero.name;
+    return hero?.name;
     
 }
 
