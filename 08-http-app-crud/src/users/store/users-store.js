@@ -31,4 +31,4 @@ export default {
     getUser: () => [...state.users],
     getCurrentPage: () => state.currentPage,
 
-}
+};
