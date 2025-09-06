@@ -17,6 +17,6 @@ export const loadUsersByPage = async( page = 1 ) =>{   //recibo el page y sino r
 //  const users = data.map( userLike => localhostUserToModel( userLike ) ); optimizo
     const users = data.map( localhostUserToModel );
     
-//  console.log(users); compruebo el retorno de mi funcion
+    //console.log(users); compruebo el retorno de mi funcion
     return users;
 }
