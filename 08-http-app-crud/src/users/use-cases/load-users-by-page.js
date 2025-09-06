@@ -13,7 +13,11 @@ export const loadUsersByPage = async( page = 1 ) =>{   //recibo el page y sino r
     const res = await fetch(url);
     const resjson = await res.json();
     const data = resjson.data;
-
+    
+    if( page > resjson.pages) 
+        return [];
+    
+    
 //  const users = data.map( userLike => localhostUserToModel( userLike ) ); optimizo
     const users = data.map( localhostUserToModel );
     
