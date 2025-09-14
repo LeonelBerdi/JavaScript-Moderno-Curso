@@ -1,23 +1,43 @@
 import './render-modal.css';
 import modalHtml  from './render-modal.html?raw'; //?raw es para importar en vite un html
-
+import { User } from '../../models/user';
+import { getUserById } from '../../use-cases/get-user-by-id';
 
 let modal, form;
+let loadeduser = {};
 
 
-//TODO: cargar usuario por id
-export const showModal = () => {
+/**
+ * 
+ * @param {String|Number} id 
+ */
+export const showModal = async( id ) => {
     modal?.classList.remove('hide-modal');
+    loadeduser = {};
+
+    if ( !id ) return;
+    const user = await getUserById( id );
+    setFormValues( user );
 
 }
 
 export const hideModal = () =>{
     modal?.classList.add('hide-modal');
-    form?.reset();
-    
+    form?.reset(); 
 }
 
 
+/**
+ * 
+ * @param {User} user 
+ */
+const setFormValues = ( user ) => {
+    form.querySelector('[name="firstName"]').value = user.firstName;
+    form.querySelector('[name="lastName"]').value = user.lastName;
+    form.querySelector('[name="balance"]').value = user.balance;
+    form.querySelector('[name="isActive"]').checked = user.isActive;
+    loadeduser = user;
+}
 
 /**
  * 
@@ -47,7 +67,7 @@ export const renderModal = ( Element, callback ) => {
         event.preventDefault();
 
         const formData = new FormData( form );  
-        const userLike = {};
+        const userLike = { ...loadeduser  };
 
         // for (const iterator of formData ) { desestructuro iterator me devulve pares de valores 
         for (const [key, value] of formData ) { // me devuelve pares de valores ['firstname', 'leonel'], ['LastName', 'Berdi'], ['balance', '123456,789'], ['is Active','on']

@@ -1,6 +1,8 @@
 import "./render-table.css";
 import usersStore from '../../store/users-store';
 import { User } from "../../models/user";
+import { showModal } from "../render-modal/render-modal"
+
 
 let table;
 
@@ -25,6 +27,26 @@ const createTable = () => {
 
 
 /**
+ * @param {MouseEvent} event 
+ */
+const tableSelectListener = ( event ) => {
+    // console.log(event.target) //ver donde se hace click
+    const element = event.target.closest('.select-user');
+    // console.log(element);
+    
+    if ( !element ) return;
+
+    const id = element.getAttribute('data-id');
+    // console.log(id);
+
+    showModal(id);
+    
+}
+
+
+
+
+/**
  * 
  * @param {HTMLDivElement} element 
  */
@@ -37,6 +59,8 @@ export const renderTable = ( element ) => {
         element.append( table );
 
         //TODO: listeners a la table
+        //table.addEventListener('click', event => tableSelectListener(event)); optimizo una funcion con unico argumento
+        table.addEventListener('click', tableSelectListener );
     }
 
     let tableHTML = '';
@@ -49,9 +73,9 @@ export const renderTable = ( element ) => {
                 <td>${ user.lastName }</td>
                 <td>${ user.isActive }</td>
                 <td>
-                    <a href="#/" data-id="${ user.id }">Select</a>
+                    <a href="#/" class="select-user" data-id="${ user.id }">Select</a>
                     |
-                    <a href="#/" data-id="${ user.id }">Delete</a>
+                    <a href="#/" class="delete-user" data-id="${ user.id }">Delete</a>
                 </td> 
             </tr>
         `
