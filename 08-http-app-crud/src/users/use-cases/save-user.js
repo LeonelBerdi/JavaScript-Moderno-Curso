@@ -20,7 +20,7 @@ export const saveUser = async( userLike ) => {
      if ( user.id ) {
         userUpdated = await updateUser ( userToSave );
     } else {
-        updateUser = await createUser( userToSave );
+        userUpdated = await createUser( userToSave );
     }
 
     return localhostUserToModel( userUpdated );

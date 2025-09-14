@@ -2,6 +2,8 @@ import "./render-table.css";
 import usersStore from '../../store/users-store';
 import { User } from "../../models/user";
 import { showModal } from "../render-modal/render-modal"
+import { deleteUserById } from "../../use-cases/delete-user-by-id";
+
 
 
 let table;
@@ -43,6 +45,30 @@ const tableSelectListener = ( event ) => {
     
 }
 
+/**
+ * @param {MouseEvent} event 
+ */
+const tableDeleteListener = async( event ) => {
+    // console.log(event.target) //ver donde se hace click
+    const element = event.target.closest('.delete-user');
+    // console.log(element);
+    
+    if ( !element ) return;
+
+    const id = element.getAttribute('data-id');
+    // console.log(id);
+    try{ 
+        await deleteUserById(id);
+        await usersStore.reloadPage();
+        document.querySelector('#current-page').innerText = usersStore.getCurrentPage();
+        renderTable();
+
+    } catch (error) {
+        console.log(error);
+        alert('No se pudo eliminar');
+
+    }
+}
 
 
 
@@ -58,9 +84,11 @@ export const renderTable = ( element ) => {
         table = createTable();
         element.append( table );
 
-        //TODO: listeners a la table
+        
         //table.addEventListener('click', event => tableSelectListener(event)); optimizo una funcion con unico argumento
         table.addEventListener('click', tableSelectListener );
+        table.addEventListener('click', tableDeleteListener );
+
     }
 
     let tableHTML = '';
