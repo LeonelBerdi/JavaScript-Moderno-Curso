@@ -1,5 +1,4 @@
-const superHeroes = [
-//    'Fernando',
+const state = [
     {
         id: 1,
         name: 'Batman' 
@@ -18,36 +17,57 @@ const superHeroes = [
     },
 ]
 
-const superHeroesCopy = [...superHeroes];   //utilizando el operador spread "...", en teoria tengo una nueva copia del arreglo
-                                            //cualquier copia sino se hace esto pasa por referencia salvo que sea un primitivo.
+console.table(state);
 
-superHeroesCopy[1].name= 'Green Lantern'    //Al realizar el cambio en la copia aun se modifica el objeto del array original 
-                                            // Esto se debe a que a pesar de que se ha utilizado el spread los objetos dentro del array se siguen pasando por referencia
-                                            // El spread no funciona dentro de objetos si en primitivos 
+const index = 1;
+const newName = 'Green Lantern';
 
-superHeroesCopy[0] = 'Green Lantern'    // El spread no funciona dentro de objetos si en primitivos como fernando es un primitivo si lo realiza
-                                        //el operador spread funciona si se sabe que se tiene primitivos, entros, numeros, simbolos.
-const superHeroesCopy2 = [...superHeroes.map(h => ({...h}))];   //el problema es que si alguno de los objetos tiene dentro otro seguiria pasando por referencia 
-                                                                // en el caso de que se tenga otro objeto dentro se deberia realizar otro map y es una locura.
+const newState = state.map( (hero, i) => {  //reemplazar en una array una posicion 
+    if ( i === index ) {
+        hero.name = newName;
+    }
 
-const superHeroesCopy3 = structuredClone(superHeroes);      //Al utilizar el structuredClone la copia no se realiza por referencia
+    return {...hero};   //solucion para romper la referencia hacer el spread del objeto
+                        //no rompe la referencia cuidadito!
+
+});
+
+const index2 = 3;
+const newName2 = 'Cyborg';
+
+const newState2 = state.with(index2, { //sirve para en un array indicar la posicion que se quiere reemplazar sin necesidad de lo anterior pero no rompe la referencia
+    id: 1000,
+    name: newName2
+}) 
+
+const index3 = 2;
+const newName3 = 'WonderWoman';
+
+const newState3 = structuredClone(state).with(index3, { //para romper la referencia lo paso por el structuredClone
+    id: 1000,       //sino le doy uno de los datos del objeto lo sobreescribe en vacio 
+    name: newName3
+}) 
+
+const newState4 = structuredClone(state).with(index3, { //para romper la referencia lo paso por el structuredClone
+    ...state[index3],       //esto no lo entiendo, hace un spread del objeto de la posicion del arreglo pero no entiendo como se evita que pise la info que no le ody que es el id???
+    name: newName3
+}) 
+
+//uso de .at
+
+const newState5 = structuredClone(state).with(index3, { //para romper la referencia lo paso por el structuredClone
+    ...state.at[index3],       //esto no lo entiendo, hace un spread del objeto de la posicion del arreglo pero no entiendo como se evita que pise la info que no le ody que es el id???
+    name: newName3
+}) 
 
 
-superHeroesCopy3[1].name= 'Superman'    //al modificar el array copiado con structure clone solo se ve modificado este no como en los casos anteriores. se rompe la referencia
+state[0].name = 'Volcan Negro';
 
-const superHeroesCopy4 = JSON.parse( JSON.stringify(superHeroes)) // esto se hacia antes de esta forma
+console.table(state);
+console.table(newState);
+console.table(newState2);
+console.table(newState3);
 
-superHeroesCopy4[1].name= 'WonderWoman'
-
-console.table(superHeroes);
-console.table(superHeroesCopy);
-console.table(superHeroesCopy2);
-console.table(superHeroesCopy3);
-console.table(superHeroesCopy4);
-
-
-
-
-export default {
-    
-}
+console.log('La ultima posicion: ', state[state.length -1])
+console.log('La ultima posicion: ', state.at(-1))
+console.log('La ultima posicion: ', state.at(-2))
